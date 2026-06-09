@@ -17,6 +17,12 @@ export interface HeroModel {
    * and animated for free).
    */
   show?: string[];
+  /**
+   * Extra Y rotation (radians) applied to the model root so its forward axis
+   * matches the KayKit convention (+Z). Non-KayKit rigs (e.g. Meshy) may face a
+   * different way; this corrects them per model.
+   */
+  faceOffset?: number;
 }
 
 /** Held-item meshes hidden unless a hero's `show` list keeps them visible. */
@@ -27,6 +33,7 @@ const BARBARIAN = '/models/Barbarian.glb';
 const MAGE = '/models/Mage.glb';
 const ROGUE = '/models/Rogue.glb';
 const ROGUE_HOODED = '/models/Rogue_Hooded.glb';
+const ARCHER = '/models/Archer.glb'; // Meshy AI archer (separate rig + clip names)
 
 // Shared clip names that exist in every KayKit character GLB.
 const SHARED = {
@@ -76,6 +83,21 @@ const MODELS: Record<string, HeroModel> = {
   // passive tanks
   sentinel: model(KNIGHT, ATTACK.melee1h, { show: ['1H_Sword', 'Round_Shield'] }),
   ironhide: model(BARBARIAN, ATTACK.melee2h, { show: ['1H_Axe', 'Barbarian_Round_Shield'] }),
+
+  // Meshy AI archer: its own rig/clip names; no built-in weapon meshes to toggle.
+  // Limited clip set, so idle reuses Walking and hit/death reuse shot variants.
+  archer: {
+    file: ARCHER,
+    anims: {
+      idle: 'Walking',
+      run: 'Running',
+      attack: 'Archery_Shot',
+      cast: 'Archery_Shot_1',
+      hit: 'Archery_Shot_2',
+      death: 'Archery_Shot_3',
+    },
+    faceOffset: 0,
+  },
 };
 
 const DEFAULT_MODEL = model(KNIGHT, ATTACK.melee1h, { show: ['1H_Sword'] });
@@ -86,7 +108,7 @@ export function getHeroModel(heroId: string): HeroModel {
 
 /** Unique model files (for preloading / caching). */
 export const ALL_MODEL_FILES: string[] = Array.from(
-  new Set([KNIGHT, BARBARIAN, MAGE, ROGUE, ROGUE_HOODED]),
+  new Set([KNIGHT, BARBARIAN, MAGE, ROGUE, ROGUE_HOODED, ARCHER]),
 );
 
 /** Target on-screen height (world units) every model is auto-scaled to. */

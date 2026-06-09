@@ -137,6 +137,20 @@ list.push(
   ),
 );
 
+// --- Meshy AI archer (custom 3D model) ------------------------------------
+list.push(
+  mk(
+    'archer',
+    'Forest Archer',
+    'standard',
+    '#6fae4f',
+    { maxHp: 330, maxMana: 100, attackDamage: 21, attackSpeed: 1, manaRegen: 10, moveSpeed: 105, attackRange: 250 },
+    ['marksman_passive', 'marksman_ult'],
+    true,
+    'A long-range bowman who pierces armour with every shot and looses a devastating Volley.',
+  ),
+);
+
 export const HEROES: Record<string, HeroDef> = Object.fromEntries(
   list.map((h) => [h.id, h] as const),
 );

@@ -263,7 +263,7 @@ export class ArenaRenderer3D {
     const def = getHeroModel(c.heroId);
     void instantiate(def.file, def.show).then((inst) => {
       if (!inst) return;
-      inst.root.rotation.y = MODEL_FACING_OFFSET;
+      inst.root.rotation.y = MODEL_FACING_OFFSET + (def.faceOffset ?? 0);
       yaw.add(inst.root);
       view.model = inst;
       // Resolve logical anims to actual clips and build the action map.

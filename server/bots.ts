@@ -34,4 +34,5 @@ export const HERO_SECTS: Record<string, [SectId, SectId]> = {
   shaman: ['healing', 'regen'],
   marksman: ['attack', 'critical'],
   ironhide: ['health', 'shield'],
+  archer: ['attack', 'critical'],
 };
